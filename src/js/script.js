@@ -1,5 +1,6 @@
 // seu código aqui
 // li img h3 span p
+
 // Declaração de obtenção de elementos atraves do DOM.
 let secaoProdutos = document.getElementById("listaproduct");
 let tagValorTotal = document.querySelector(".priceContainer span");
@@ -7,6 +8,7 @@ let botoesFiltrar = document.getElementById("botoesContainer");
 let inputSearch = document.querySelector(".containerBuscaPorNome input");
 let inputButton = document.querySelector(".containerBuscaPorNome button");
 
+//Listar Produtos
 function listproducts(array) {
   array.forEach(function (element) {
     let nome = element.nome;
@@ -33,10 +35,9 @@ function listproducts(array) {
   );
   tagValorTotal.innerText = `R$ ${valorSecao}.00`;
 }
-
 listproducts(produtos);
 
-//
+//Filtrar SecaoProdutos
 botoesFiltrar.addEventListener("click", filtrarSecao);
 function filtrarSecao(event) {
   let produtosHortifruti = produtos.filter(function (element) {
@@ -83,13 +84,32 @@ function filtrarSecao(event) {
   }
 }
 
-// let arrayyy = [
-//   {
-//     preco: 20,
-//     calor: 30,
-//   },
-// ];
-
-// let testereduce = arrayyy.reduce((acc, itemAtual) => acc + itemAtual.preco, 0);
-
-// console.log(testereduce);
+//Input Busca
+inputButton.addEventListener("click", realizarBusca);
+function realizarBusca(event) {
+  let valorDoUsuario = inputSearch.value;
+  let result = buscar(valorDoUsuario);
+  secaoProdutos.innerHTML = "";
+  tagValorTotal.innerText = "";
+  listproducts(result);
+  let valorPesquisado = result.reduce(
+    (acc, itemAtual) => acc + itemAtual.preco,
+    0
+  );
+  tagValorTotal.innerText = `R$ ${valorPesquisado}.00`;
+}
+function buscar(valor) {
+  let arrResult = [];
+  produtos.forEach((element) => {
+    let nomePesquisado = valor.toLowerCase();
+    let nomeProduto = element.nome.toLowerCase();
+    let categoriaProduto = element.secao.toLowerCase();
+    if (
+      nomeProduto.includes(nomePesquisado) ||
+      categoriaProduto.includes(nomePesquisado)
+    ) {
+      arrResult.push(element);
+    }
+  });
+  return arrResult;
+}
