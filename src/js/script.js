@@ -1,5 +1,4 @@
 // seu código aqui
-// li img h3 span p
 
 // Declaração de obtenção de elementos atraves do DOM.
 
@@ -24,6 +23,7 @@ function createCard(element, secao) {
   let tagPreco = document.createElement("p");
   let tagButton = document.createElement("button");
   let tagQuantidade = document.createElement("span");
+  tagComponentes.classList.add("card__components");
 
   tagImg.src = element.img;
   tagButton.id = element.id;
@@ -42,8 +42,6 @@ function createCard(element, secao) {
     tagButton.addEventListener("click", removeToList);
     tagQuantidade.innerText = `Quantidade: ${element.quantidade}`;
   }
-
-  tagComponentes.classList.add("card__components");
 
   if (secao == listaProdutos) {
     tagLi.append(
