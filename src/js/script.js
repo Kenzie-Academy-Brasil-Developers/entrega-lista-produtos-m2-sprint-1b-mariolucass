@@ -125,20 +125,17 @@ qtdeTotal.innerText = `Adicione mais produtos 🛒`;
 //Funções complementares
 
 function addToCart(event) {
-  let buttonClick = event.target;
-  if (buttonClick.tagName == "BUTTON") {
-    produtos.forEach((element) => {
-      if (element.id == buttonClick.id) {
-        if (arrayCart.includes(element)) {
-          indexElemento = arrayCart.indexOf(element);
-          arrayCart[indexElemento].quantidade += 1;
-        } else {
-          element.quantidade = 1;
-          arrayCart.push(element);
-        }
+  produtos.forEach((element) => {
+    if (element.id == event.target.id) {
+      if (arrayCart.includes(element)) {
+        indexElemento = arrayCart.indexOf(element);
+        arrayCart[indexElemento].quantidade += 1;
+      } else {
+        element.quantidade = 1;
+        arrayCart.push(element);
       }
-    });
-  }
+    }
+  });
   carrinhoVazio.innerHTML = "";
   mensagemDeProdutos(arrayCart);
   listproducts(arrayCart, cartList);
@@ -155,8 +152,11 @@ function removeToList(event) {
   }
 
   if (arrayCart.length == 0) {
-    carrinhoVazio.innerHTML = `<h3>O carrinho está vazio..</h3>
-    <span>Adicione mais itens.</span>`;
+    let tagTitleCartEmpty = document.createElement("h3");
+    let tagAddMoreItens = document.createElement("span");
+    tagTitleCartEmpty.innerText = "O carrinho está vazio..";
+    tagAddMoreItens.innerText = "Adicione mais itens.";
+    carrinhoVazio.append(tagTitleCartEmpty, tagAddMoreItens);
   }
   mensagemDeProdutos(arrayCart);
   listproducts(arrayCart, cartList);
